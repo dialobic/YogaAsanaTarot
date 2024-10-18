@@ -87,7 +87,8 @@
 
     <!-- Colonna destra con i pulsanti per prendere una carta o la carta del giorno -->
     <div class="right-column">
-        <br><br><br><br> <!-- Circa 6-8 <br> per ottenere 260px di spazio -->
+        <img id="titoloImage" src="titolo.jpg" alt="Tarocchi Yoga">
+        <br> <!-- acapo -->
         <button id="drawButton" onclick="drawCard()">Prendi una carta</button>
         <button id="dayCardButton" onclick="drawDayCard()">La carta del giorno</button>
 
@@ -820,6 +821,7 @@ In questo periodo, abbraccia il ritmo della vita e non temere di rallentare. Las
             const descriptionContainer = document.getElementById('descriptionContainer');
             const drawButton = document.getElementById('drawButton');
             const dayCardButton = document.getElementById('dayCardButton');
+            const significatiButton = document.getElementById('significatiButton');
             const namasteButton = document.getElementById('namasteButton');
             const descriptionText = document.getElementById('descriptionText');
 
