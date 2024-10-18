@@ -93,7 +93,7 @@
 
 
     <!-- Nuovo pulsante aggiunto per i significati delle carte -->
-    <button id="cardMeaningsButton" onclick="window.location.href='https://www.francescasuttiyoga.it/yoga-asana-tarot/'">
+    <button id="significatiButton" onclick="window.location.href='https://www.francescasuttiyoga.it/yoga-asana-tarot/'">
         Significati delle carte
     </button>
         
@@ -801,11 +801,13 @@ In questo periodo, abbraccia il ritmo della vita e non temere di rallentare. Las
             // Nasconde i pulsanti e mostra il testo e il pulsante Namaste
             const drawButton = document.getElementById('drawButton');
             const dayCardButton = document.getElementById('dayCardButton');
+            const significatiButton = document.getElementById('significatiButton');
             const descriptionContainer = document.getElementById('descriptionContainer');
             const namasteButton = document.getElementById('namasteButton');
 
             drawButton.style.display = "none"; // Nasconde il pulsante "Prendi una carta"
             dayCardButton.style.display = "none"; // Nasconde il pulsante "La carta del giorno"
+            significatiButton.style.display = "none"; // Nasconde il pulsante "significati delle carte"
             descriptionContainer.style.display = "block"; // Mostra la descrizione con barra di scorrimento
             namasteButton.style.display = "inline-block"; // Mostra il pulsante "Namaste"
         }
