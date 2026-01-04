@@ -5,115 +5,261 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>YogaAsanaTarot</title>
     <style>
-        body {
-            margin: 40px;
-            font-family: Arial, sans-serif;
-            display: flex;
-            height: 90vh;
-        }
-
-        /* Colonna sinistra con immagine */
-        .left-column {
-            flex: 40%;
-            display: flex;
-            justify-content: flex-end;
-            align-items: top;
-            padding-right: 0px;
-        }
-
-        .left-column img {
-            max-width: 341px;
-            max-height: 540px;
-        }
-
-        /* Colonna destra con barra di scorrimento per il testo */
-        .right-column {
-            flex: 60%;
-            display: flex;
-            flex-direction: column;
-            justify-content: top;
-            align-items: left;
-            padding-left: 0px;
-            height: 100vh; /* Assicurati che prenda tutta l'altezza disponibile */
-        }
-
-        /* Stile del contenitore del testo con barra di scorrimento */
-        .description-container {
-            max-height: 100vh;
-            overflow-y: auto;
-            padding: 10px;
-            border: 0px solid #ddd;
-            border-radius: 5px;
-            background-color: #f9f9f9;
-            width: 520px;
-        }
-
-        /* Stile del pulsante */
-        button {
-            width: 340px;
-            padding: 10px 20px;
-            font-size: 18px;
-            cursor: pointer;
-            border: none;
-            background-color: #4CAF50;
-            color: white;
-            border-radius: 5px;
-            margin-top: 20px;
-            display: block; /* a capo */
+        /* RESET & BASE */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
         
-        button + button {
-            margin-top: 40px; /* Opzionale: per aggiungere uno spazio tra i pulsanti */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff;
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding: 0;
         }
-
+        
+        /* MAIN CONTAINER */
+        .main-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 540px; /* Massima larghezza per ottimizzare le carte */
+            margin: 0 auto;
+            padding: 10px;
+        }
+        
+        /* CARD SECTION - OTTIMIZZATA PER 341x540px */
+        .card-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 60vh;
+            padding: 10px 0;
+        }
+        
+        .card-image {
+            width: 100%;
+            max-width: 341px; /* Dimensione effettiva della carta */
+            height: auto;
+            aspect-ratio: 341/540; /* Mantiene proporzioni originali */
+            object-fit: contain;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+        }
+        
+        /* INTERACTION SECTION */
+        .interaction-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px 0;
+            width: 100%;
+        }
+        
+        /* BUTTONS */
+        .buttons-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+        
+        button {
+            width: 100%;
+            max-width: 341px; /* Stessa larghezza della carta */
+            padding: 16px 20px;
+            font-size: 17px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            border-radius: 6px;
+            transition: background-color 0.2s;
+            background-color: #4CAF50;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
         button:hover {
             background-color: #45a049;
         }
-
-        /* Stile del testo della descrizione */
-        .description {
-            font-size: 18px;
-            color: #333;
+        
+        #namasteButton {
+            background-color: #6a5acd;
+            margin-top: 10px;
         }
-
+        
+        #namasteButton:hover {
+            background-color: #5a4cbd;
+        }
+        
+        /* DESCRIPTION - NO SCROLL, VISIBILE TUTTO */
+        .description-container {
+            width: 100%;
+            max-width: 341px; /* Stessa larghezza della carta */
+            padding: 0;
+            background-color: transparent;
+            display: none;
+            border-top: 2px solid #f0f0f0;
+            padding-top: 15px;
+            margin-top: 10px;
+        }
+        
+        .description-container.active {
+            display: block;
+        }
+        
+        .description {
+            font-size: 16px;
+            line-height: 1.5;
+            color: #333;
+            text-align: left;
+            max-height: none; /* Rimuove qualsiasi limite di altezza */
+            overflow: visible; /* Elimina lo scroll */
+        }
+        
+        /* HIDDEN UTILITY */
+        .hidden {
+            display: none !important;
+        }
+        
+        /* MOBILE OPTIMIZATIONS */
+        @media (max-width: 400px) {
+            .main-container {
+                padding: 5px;
+            }
+            
+            button {
+                padding: 14px 18px;
+                font-size: 16px;
+            }
+            
+            .description {
+                font-size: 15px;
+                line-height: 1.4;
+            }
+        }
+        
+        /* DESKTOP: Manteniamo layout verticale ma con più spazio */
+        @media (min-width: 768px) {
+            .main-container {
+                max-width: 800px;
+                padding: 20px;
+            }
+            
+            .card-section {
+                min-height: 70vh;
+            }
+            
+            .card-image {
+                max-width: 400px; /* Leggermente più grande su desktop */
+            }
+            
+            .description-container,
+            button {
+                max-width: 400px;
+            }
+            
+            .description {
+                font-size: 17px;
+                line-height: 1.6;
+            }
+        }
+        
+        /* LARGE SCREENS: massimizziamo lo spazio verticale */
+        @media (min-height: 800px) and (min-width: 768px) {
+            .card-section {
+                min-height: 75vh;
+            }
+            
+            .card-image {
+                max-width: 450px;
+                max-height: 712px; /* Mantiene proporzione 341:540 */
+            }
+            
+            .description-container,
+            button {
+                max-width: 450px;
+            }
+        }
+        
+        /* FULLSCREEN OPTIMIZATION */
+        @media (min-height: 1000px) {
+            .card-section {
+                min-height: 80vh;
+            }
+            
+            .card-image {
+                max-height: 650px;
+            }
+        }
+        
+        /* ORIENTAZIONE PAESAGGIO */
+        @media (orientation: landscape) and (max-height: 600px) {
+            .main-container {
+                flex-direction: row;
+                max-width: 100%;
+                align-items: center;
+                padding: 5px;
+            }
+            
+            .card-section {
+                flex: 3;
+                min-height: auto;
+                padding-right: 10px;
+            }
+            
+            .interaction-section {
+                flex: 2;
+                justify-content: center;
+                height: 100vh;
+            }
+            
+            .card-image {
+                max-width: 280px;
+                max-height: 90vh;
+            }
+            
+            .description {
+                font-size: 14px;
+                line-height: 1.4;
+            }
+        }
     </style>
 </head>
 <body>
-
-    <!-- Colonna sinistra con l'immagine della carta -->
-    <div class="left-column">
-        <img id="cardImage" src="card.png" alt="Carta Yoga">
-    </div>
-
-    <!-- Colonna destra con i pulsanti per prendere una carta o la carta del giorno -->
-    <div class="right-column">
-       <img id="titoloImg" src="titolo.jpg" alt="Tarocchi Yoga" style="width: 340px;">
-        <br> <!-- acapo -->
-        <button id="drawButton" onclick="drawCard()">Prendi una carta</button>
-        <button id="dayCardButton" onclick="drawDayCard()">La carta del giorno</button>
-
-
-    <!-- Nuovo pulsante aggiunto per i significati delle carte -->
-    <button id="significatiButton" onclick="window.location.href='https://www.francescasuttiyoga.it/yoga-asana-tarot/'">
-        Significati delle carte
-    </button>
+    <div class="main-container">
+        <!-- Sezione carta - OTTIMIZZATA PER VISIBILITÀ -->
+        <section class="card-section">
+            <img id="cardImage" class="card-image" src="card.png" alt="Carta Yoga Tarocchi">
+        </section>
         
-        <div id="descriptionContainer" class="description-container" style="display: none;">
-            <div id="descriptionText" class="description"></div>
-            <button id="namasteButton" onclick="restartGame()">Namaste</button>
-        </div>
+        <!-- Sezione interazione -->
+        <section class="interaction-section">
+            <div class="buttons-container">
+                <button id="drawButton">Prendi una carta</button>
+                <button id="dayCardButton">La carta del giorno</button>
+            </div>
+            
+            <div id="descriptionContainer" class="description-container">
+                <div id="descriptionText" class="description"></div>
+                <button id="namasteButton" class="hidden">Namaste</button>
+            </div>
+        </section>
     </div>
 
     <script>
-        // Qui puoi aggiungere il tuo codice JavaScript per gestire le funzionalità
-    </script>
-</body>
-</html>
-
-    <!-- Script JavaScript -->
-    <script>
-        // Array di descrizioni per ciascuna carta (estratto dal file letture.txt)
-const descriptions = [
+        // Array di descrizioni (mantenuto completo)
+        const descriptions = [
     `Hai estratto l'Arcano 0, Il Folle, rappresentato da Shiva Nataraja, il Signore della Danza Cosmica. Questo è un segno potentissimo e intriso di significato profondo.
 
 Il Folle è l'archetipo dell'inizio, del viaggio senza mappa, dell'apertura verso nuove possibilità. Shiva Nataraja, nella sua danza cosmica, simboleggia la distruzione e la creazione, il ciclo eterno della vita e della morte, del tempo e dello spazio. Con la sua danza, Shiva distrugge l'ignoranza e le illusioni, portando la conoscenza e la verità.
@@ -764,79 +910,117 @@ Sukhasana, con la sua semplicità e grazia, è un invito a trovare conforto e ca
 La presenza della Terra in questa lettura suggerisce che ora è il momento di coltivare il tuo benessere. Può essere utile dedicarti a pratiche che alimentano la tua stabilità, come la meditazione o semplici momenti di quiete nella natura. La carta ti invita a trovare agio nelle piccole cose, a ritrovare la pace in ciò che ti circonda.
 
 In questo periodo, abbraccia il ritmo della vita e non temere di rallentare. Lasciati avvolgere dall’energia della Terra e rifletti su come puoi creare uno spazio di calma nella tua quotidianità. Questo è un tempo di nutrimento e introspezione; la tua pace interiore è una risorsa preziosa da coltivare. Sii gentile con te stesso e permetti al tuo spirito di riposare e rigenerarsi.`,
-];
+        ];
+
+        // Elementi DOM
+        const cardImage = document.getElementById('cardImage');
+        const drawButton = document.getElementById('drawButton');
+        const dayCardButton = document.getElementById('dayCardButton');
+        const descriptionContainer = document.getElementById('descriptionContainer');
+        const descriptionText = document.getElementById('descriptionText');
+        const namasteButton = document.getElementById('namasteButton');
 
         // Funzione per scegliere una carta random
         function drawCard() {
-            const randomCard = Math.floor(Math.random() * 78);
+            const randomCard = Math.floor(Math.random() * descriptions.length);
             showCard(randomCard);
         }
 
-        // Funzione per calcolare la "carta del giorno" in base alla data corrente
+        // Funzione per calcolare la "carta del giorno" in base alla data
         function drawDayCard() {
             const today = new Date();
             const day = today.getDate();
-            const month = today.getMonth() + 1; // I mesi vanno da 0 a 11, quindi aggiungiamo 1
+            const month = today.getMonth() + 1;
             const year = today.getFullYear();
-
-            // Somma delle cifre del giorno, mese e anno
             const dateSum = day + month + year;
-
-            // Carta del giorno è la somma modulo 78
-            const dayCard = dateSum % 78;
-
+            const dayCard = dateSum % descriptions.length;
             showCard(dayCard);
         }
 
         // Funzione per visualizzare la carta selezionata
         function showCard(cardNumber) {
-            // Cambia l'immagine della carta
-            const cardImage = document.getElementById('cardImage');
-            cardImage.src = cardNumber + ".jpg"; // Mostra l'immagine corrispondente
-
-            // Mostra la descrizione corrispondente
-            const description = descriptions[cardNumber]; // Prende la descrizione della carta
-            const descriptionText = document.getElementById('descriptionText');
-            descriptionText.innerText = description; // Mostra la descrizione
-
-            // Nasconde i pulsanti e mostra il testo e il pulsante Namaste
-            const titoloImg = document.getElementById('titoloImg');
-            const drawButton = document.getElementById('drawButton');
-            const dayCardButton = document.getElementById('dayCardButton');
-            const significatiButton = document.getElementById('significatiButton');
-            const descriptionContainer = document.getElementById('descriptionContainer');
-            const namasteButton = document.getElementById('namasteButton');
-
-            titoloImg.style.display = "none"; // Nasconde il titolo
-            drawButton.style.display = "none"; // Nasconde il pulsante "Prendi una carta"
-            dayCardButton.style.display = "none"; // Nasconde il pulsante "La carta del giorno"
-            significatiButton.style.display = "none"; // Nasconde il pulsante "significati delle carte"
-            descriptionContainer.style.display = "block"; // Mostra la descrizione con barra di scorrimento
-            namasteButton.style.display = "inline-block"; // Mostra il pulsante "Namaste"
+            // Verifica se l'immagine esiste, altrimenti usa fallback
+            const imgSrc = cardNumber + ".jpg";
+            cardImage.src = imgSrc;
+            
+            // Gestione errore immagine
+            cardImage.onerror = function() {
+                console.warn(`Immagine ${imgSrc} non trovata, usando fallback`);
+                cardImage.src = "card.png";
+            };
+            
+            // Mostra la descrizione
+            if (descriptions[cardNumber]) {
+                descriptionText.textContent = descriptions[cardNumber];
+            } else {
+                descriptionText.textContent = "Descrizione non disponibile per questa carta.";
+            }
+            
+            // Nasconde i pulsanti e mostra la descrizione
+            drawButton.classList.add('hidden');
+            dayCardButton.classList.add('hidden');
+            descriptionContainer.classList.add('active');
+            namasteButton.classList.remove('hidden');
+            
+            // Scroll automatico alla descrizione su mobile
+            if (window.innerWidth < 768) {
+                setTimeout(() => {
+                    descriptionContainer.scrollIntoView({ 
+                        behavior: 'smooth', 
+                        block: 'start' 
+                    });
+                }, 100);
+            }
         }
 
         // Funzione per resettare il gioco
         function restartGame() {
-            const cardImage = document.getElementById('cardImage');
-            cardImage.src = "card.png"; // Torna all'immagine iniziale
-
-            const descriptionContainer = document.getElementById('descriptionContainer');
-            const titoloImg = document.getElementById('titoloImg');
-            const drawButton = document.getElementById('drawButton');
-            const dayCardButton = document.getElementById('dayCardButton');
-            const significatiButton = document.getElementById('significatiButton');
-            const namasteButton = document.getElementById('namasteButton');
-            const descriptionText = document.getElementById('descriptionText');
-
-            descriptionText.innerText = ""; // Resetta il testo della descrizione
-            descriptionContainer.style.display = "none"; // Nasconde il contenitore del testo
-            titoloImg.style.display = "inline-block"; // Mostra di nuovo il titolo
-            drawButton.style.display = "inline-block"; // Mostra di nuovo il pulsante "Prendi una carta"
-            dayCardButton.style.display = "inline-block"; // Mostra di nuovo il pulsante "La carta del giorno"
-            significatiButton.style.display = "inline-block"; // Mostra di nuovo il pulsante "significati"
-            namasteButton.style.display = "none"; // Nasconde il pulsante "Namaste"
+            // Ripristina immagine iniziale
+            cardImage.src = "card.png";
+            
+            // Resetta testo
+            descriptionText.textContent = "";
+            
+            // Nasconde descrizione e mostra pulsanti
+            descriptionContainer.classList.remove('active');
+            drawButton.classList.remove('hidden');
+            dayCardButton.classList.remove('hidden');
+            namasteButton.classList.add('hidden');
+            
+            // Scroll automatico alla carta
+            if (window.innerWidth < 768) {
+                setTimeout(() => {
+                    document.querySelector('.card-section').scrollIntoView({ 
+                        behavior: 'smooth', 
+                        block: 'start' 
+                    });
+                }, 100);
+            }
         }
-    </script>
 
+        // Aggiungi event listeners
+        drawButton.addEventListener('click', drawCard);
+        dayCardButton.addEventListener('click', drawDayCard);
+        namasteButton.addEventListener('click', restartGame);
+
+        // Supporto per tasto ESC per resettare
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && descriptionContainer.classList.contains('active')) {
+                restartGame();
+            }
+        });
+
+        // Ottimizza il layout al caricamento
+        window.addEventListener('load', function() {
+            // Adatta l'altezza della sezione carta
+            const cardSection = document.querySelector('.card-section');
+            const cardHeight = cardImage.naturalHeight || 540;
+            const availableHeight = window.innerHeight * 0.6;
+            
+            if (cardHeight > availableHeight) {
+                cardImage.style.maxHeight = `${availableHeight}px`;
+            }
+        });
+    </script>
 </body>
 </html>
